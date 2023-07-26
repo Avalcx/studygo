@@ -39,7 +39,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 			return
 		}
 
-		mc, err := jwtutil.ParseToken(params[1])
+		myCustomClaims, err := jwtutil.ParseToken(params[1])
 		if err != nil {
 			returnData.Status = 2005
 			returnData.Message = "无效的Token"
@@ -48,7 +48,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 			return
 		}
 		// 将当前请求的username信息保存到请求的上下文c上
-		c.Set("username", mc.Username)
+		c.Set("username", myCustomClaims.Username)
 		c.Next()
 	}
 }

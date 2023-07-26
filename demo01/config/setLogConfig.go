@@ -34,7 +34,7 @@ func setLogConfig() {
 
 		// 获取函数所在文件的文件名
 		// f.Line 行号 f.File 文件名 f.Function 函数名
-		CallerPrettyfier: func(f *runtime.Frame) (function string, file string) {
+		CallerPrettyfier: func(f *runtime.Frame) (string, string) {
 			fileName := path.Base(f.File)
 			line := f.Line
 			fileNameLine := fileName + ":" + strconv.Itoa(line)
