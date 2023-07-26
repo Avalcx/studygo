@@ -5,6 +5,7 @@ import (
 	"project01/config"
 	"project01/model/routermodel"
 	"project01/utils/jwtutil"
+	"project01/utils/logutil"
 
 	"github.com/gin-gonic/gin"
 )
@@ -25,6 +26,7 @@ func Login(c *gin.Context) {
 		returnData.Message = "登录成功"
 		returnData.Data["token"] = tokenString
 		c.JSON(http.StatusOK, returnData)
+		logutil.Info(map[string]any{"username": user.Username}, returnData.Message)
 		return
 	}
 
@@ -34,10 +36,13 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
+	username := c.MustGet("username").(string)
 	returnData := routermodel.NewReturnData()
 	returnData.Status = 2000
 	returnData.Message = "登出成功"
+	returnData.Data["username"] = username
 	c.JSON(http.StatusOK, returnData)
+	logutil.Info(map[string]any{"username": username}, returnData.Message)
 }
 
 type UserInfo struct {

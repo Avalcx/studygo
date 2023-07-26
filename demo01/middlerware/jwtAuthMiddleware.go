@@ -14,7 +14,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 	return func(c *gin.Context) {
 		// 除了login和logout，其他路径全局注册
 		requestUrl := c.FullPath()
-		if requestUrl == "/api/auth/login" || requestUrl == "/api/auth/logout" {
+		if requestUrl == "/api/auth/login" {
 			c.Next()
 			return
 		}

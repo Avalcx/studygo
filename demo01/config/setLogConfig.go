@@ -7,7 +7,7 @@ import (
 
 func setLogConfig() {
 	viper.SetDefault("LOGLEVEL", "debug")
-	viper.SetDefault("LOGREPORTER", "false")
+	viper.SetDefault("LOGREPORTER", "true")
 	viper.AutomaticEnv()
 	level := viper.GetString("LOGLEVEL")
 	reporter := viper.GetString("LOGREPORTER")
