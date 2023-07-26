@@ -9,10 +9,9 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var returnData = routermodel.NewReturnData()
-
 func Login(c *gin.Context) {
 	var user UserInfo
+	returnData := routermodel.NewReturnData()
 	if err := c.ShouldBind(&user); err != nil {
 		returnData.Status = 2001
 		returnData.Message = "无效的参数"
@@ -35,6 +34,7 @@ func Login(c *gin.Context) {
 }
 
 func Logout(c *gin.Context) {
+	returnData := routermodel.NewReturnData()
 	returnData.Status = 2000
 	returnData.Message = "登出成功"
 	c.JSON(http.StatusOK, returnData)

@@ -9,9 +9,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var returnData = routermodel.NewReturnData()
-
 func JWTAuthMiddleware() func(c *gin.Context) {
+	returnData := routermodel.NewReturnData()
 	return func(c *gin.Context) {
 		// 除了login和logout，其他路径全局注册
 		requestUrl := c.FullPath()
@@ -24,7 +23,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		authHeader := c.Request.Header.Get("Authorization")
 		if authHeader == "" {
 			returnData.Status = 2000
-			returnData.Message = "请求头中auth为空"
+			returnData.Message = "请求头token为空"
 			c.JSON(http.StatusOK, returnData)
 			c.Abort()
 			return
@@ -34,7 +33,7 @@ func JWTAuthMiddleware() func(c *gin.Context) {
 		params := strings.SplitN(authHeader, " ", 2)
 		if !(len(params) == 2 && params[0] == "Bearer") {
 			returnData.Status = 2004
-			returnData.Message = "请求头中auth格式有误"
+			returnData.Message = "token格式错误"
 			c.JSON(http.StatusOK, returnData)
 			c.Abort()
 			return

@@ -7,9 +7,8 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-var returnData = routermodel.NewReturnData()
-
 func Hello(c *gin.Context) {
+	returnData := routermodel.NewReturnData()
 	username := c.MustGet("username").(string)
 	returnData.Status = 2000
 	returnData.Message = "success"
