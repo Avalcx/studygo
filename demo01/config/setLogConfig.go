@@ -1,6 +1,10 @@
 package config
 
 import (
+	"path"
+	"runtime"
+	"strconv"
+
 	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
@@ -25,5 +29,16 @@ func setLogConfig() {
 	} else {
 		logrus.SetReportCaller(false)
 	}
-	logrus.SetFormatter(&logrus.JSONFormatter{TimestampFormat: "2006-01-02 15:04:05"})
+	logrus.SetFormatter(&logrus.JSONFormatter{
+		TimestampFormat: "2006-01-02 15:04:05",
+
+		// 获取函数所在文件的文件名
+		// f.Line 行号 f.File 文件名 f.Function 函数名
+		CallerPrettyfier: func(f *runtime.Frame) (function string, file string) {
+			fileName := path.Base(f.File)
+			line := f.Line
+			fileNameLine := fileName + ":" + strconv.Itoa(line)
+			return f.Function, fileNameLine
+		},
+	})
 }
